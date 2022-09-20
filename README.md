@@ -1,10 +1,10 @@
-# Easy Toolkit
+# Easy Toolset
 
-A light weight toolkit that makes easier to develop unity projects.
+A lightweight set of tools that makes easier to develop unity projects.
 
 ### Table of Contents
 
-- [Easy Toolkit](#easy-toolkit)
+- [Easy Toolset](#easy-toolset)
     - [Table of Contents](#table-of-contents)
   - [Quick Start](#quick-start)
   - [e.[shortcut]](#eshortcut)
@@ -15,21 +15,20 @@ A light weight toolkit that makes easier to develop unity projects.
       - [Mute](#mute)
       - [Output](#output)
       - [Toggle Mute](#toggle-mute)
-  - [Events](#events)
+  - [GameEvents](#gameevents)
       - [On](#on)
       - [Once](#once)
       - [Off](#off)
       - [Emit](#emit)
-      - [Remove](#remove)
-      - [Remove All](#remove-all)
-      - [Remove All (by prefix)](#remove-all-by-prefix)
+      - [Clear](#clear)
+      - [Clear (eventName)](#clear-eventname)
+      - [Clear (filter)](#clear-filter)
+      - [Reset](#reset)
       - [Names](#names)
-      - [Names (by prefix)](#names-by-prefix)
-      - [CleanUp](#cleanup)
-      - [Events Count](#events-count)
+      - [Event Count](#event-count)
   - [Follow](#follow)
       - [Follow](#follow-1)
-      - [Stop Follow](#stop-follow)
+      - [Stop Follower](#stop-follower)
   - [Random](#random)
       - [bool](#bool)
       - [int](#int)
@@ -39,6 +38,7 @@ A light weight toolkit that makes easier to develop unity projects.
       - [index](#index)
       - [Vector2](#vector2)
       - [Vector3](#vector3)
+      - [Color](#color)
   - [Math](#math)
       - [Constants](#constants)
       - [To Radian](#to-radian)
@@ -48,19 +48,19 @@ A light weight toolkit that makes easier to develop unity projects.
       - [Lerp](#lerp)
       - [LerpUnclamped](#lerpunclamped)
       - [Sin](#sin)
-      - [Asin](#asin)
       - [Cos](#cos)
-      - [Acos](#acos)
       - [Tan](#tan)
+      - [Asin](#asin)
+      - [Acos](#acos)
       - [Atan](#atan)
-      - [Pow](#pow)
       - [Min](#min)
       - [Max](#max)
       - [Floor](#floor)
       - [Ceiling](#ceiling)
       - [Round](#round)
-      - [Sqrt (Square Root)](#sqrt-square-root)
       - [Sign](#sign)
+      - [Pow](#pow)
+      - [Sqrt (Square Root)](#sqrt-square-root)
   - [Timers](#timers)
       - [Timeout](#timeout)
       - [Interval](#interval)
@@ -117,6 +117,7 @@ AudioPlayer is a tool to play `AudioClip` in the 2D space.
 public static class AudioPlayer {...}
 ```
 
+
 <br>
 
 #### Play
@@ -145,6 +146,7 @@ void e.Play(AudioClip clip, float volume)
 > AudioPlayer.Play(clip, 0.5f);
 > ```
 
+
 <br>
 
 #### Stop
@@ -160,6 +162,7 @@ void AudioPlayer.Stop()
 > ```cs
 > AudioPlayer.Stop();
 > ```
+
 
 <br>
 
@@ -177,6 +180,7 @@ float AudioPlayer.volume { get; set; }
 > AudioPlayer.volume = 0.5f;
 > ```
 
+
 <br>
 
 #### Mute
@@ -193,6 +197,7 @@ bool AudioPlayer.mute { get; set; }
 > AudioPlayer.mute = true;
 > ```
 
+
 <br>
 
 #### Output
@@ -208,6 +213,7 @@ AudioMixerGroup AudioPlayer.output { get; set; }
 > ```cs
 > AudioPlayer.output = master;
 > ```
+
 
 <br>
 
@@ -229,13 +235,17 @@ bool AudioPlayer.ToggleMute()
 
 <br>
 
-## Events
+## GameEvents
 
-Event manger is an useful service that make it easy to emiting event in your all active scenes. (supports additive scenes as well)
+GameEvents is a service that make it easy to emiting event in all active scenes.
 
 ```cs
 public static class GameEvents {...}
 ```
+
+> Supports additive scenes.
+
+> Supports single emission listeners (`Once`).
 
 
 <br>
@@ -243,10 +253,6 @@ public static class GameEvents {...}
 #### On
 
 To add an `event listener` use:
-
-```cs
-void GameEvents.On(string eventName, Action<object> listener)
-```
 
 ```cs
 void e.On(string eventName, Action listener)
@@ -264,7 +270,16 @@ void e.On(string eventName, Action<float> listener)
 void e.On(string eventName, Action<string> listener)
 ```
 ```cs
+void e.On(string eventName, Action<Color> listener)
+```
+```cs
+void e.On(string eventName, Action<Vector3> listener)
+```
+```cs
 void e.On<T>(string eventName, Action<T> listener)
+```
+```cs
+void GameEvents.On(string eventName, Action<object> listener)
 ```
 
 > Examples:
@@ -283,9 +298,6 @@ void e.On<T>(string eventName, Action<T> listener)
 To add an `event listener` just for next emit use:
 
 ```cs
-void GameEvents.Once(string eventName, Action<object> listener)
-```
-```cs
 void e.Once(string eventName, Action listener)
 ```
 ```cs
@@ -301,7 +313,16 @@ void e.Once(string eventName, Action<float> listener)
 void e.Once(string eventName, Action<string> listener)
 ```
 ```cs
+void e.Once(string eventName, Action<Color> listener)
+```
+```cs
+void e.Once(string eventName, Action<Vector3> listener)
+```
+```cs
 void e.Once<T>(string eventName, Action<T> listener)
+```
+```cs
+void GameEvents.Once(string eventName, Action<object> listener)
 ```
 
 > Examples:
@@ -320,9 +341,6 @@ void e.Once<T>(string eventName, Action<T> listener)
 To remove an `event listener` use:
 
 ```cs
-void GameEvents.Off(string eventName, Action<object> listener)
-```
-```cs
 void e.Off(string eventName, Action listener)
 ```
 ```cs
@@ -338,15 +356,38 @@ void e.Off(string eventName, Action<float> listener)
 void e.Off(string eventName, Action<string> listener)
 ```
 ```cs
+void e.Off(string eventName, Action<Color> listener)
+```
+```cs
+void e.Off(string eventName, Action<Vector3> listener)
+```
+```cs
 void e.Off<T>(string eventName, Action<T> listener)
 ```
+```cs
+void GameEvents.Off(string eventName, Action<object> listener)
+```
+
+> **Warning**: Never forget to use `Off` method to unregister your listeners within `OnDestroy` or when you don't need them, otherwise it will cause **Unnecessary Calls** and **Memory Leaks**.
+
+> **Warning**: Listeners **ARE NOT** automatically removed when scenes change.
+
+> **Warning**: Listeners **ARE NOT** automatically removed when `GameObject` or `MonoBehaviour` get destroyed.
+
+> **Warning**: Listeners that added via `Once` **ARE ALSO** need to get removed via `Off` method withing `OnDestroy`, this is for safety in case they never get called to prevent **Unnecessary Call** and **Memory Leaks**.
 
 > Examples:
-> 
 > ```cs
-> e.Off("GameOver", OnGameOver);
+> void Awake() {
+>     e.On("Pause", OnPause);
+> }
 >
-> void OnGameOver() {...}
+> void OnDestroy() {
+>     // never forget to remove the listener
+>     e.Off("Pause", OnPause);
+> }
+>
+> void OnPause() {...}
 > ```
 
 
@@ -357,85 +398,104 @@ void e.Off<T>(string eventName, Action<T> listener)
 To emit an `event` use:
 
 ```cs
-void GameEvents.Emit(string eventName, object data)
-```
-```cs
 void e.Emit(string eventName)
 ```
 ```cs
 void e.Emit<T>(string eventName, T data)
 ```
+```cs
+void GameEvents.Emit(string eventName, object data)
+```
 
 > Examples:
-> 
+>
 > ```cs
-> GameEvents.Emit("GameOver");
+> e.Emit("GameOver");
 > ```
 > ```cs
-> e.Emit("Pause", true);
+> GameEvents.Emit("GameOver", score);
 > ```
 
 
 <br>
 
-#### Remove
+#### Clear
 
-To remove an event use:
+To remove all listeners of all events use:
 
 ```cs
-void GameEvents.Remove(string eventName)
+void GameEvents.Clear()
 ```
-```cs
-void e.RemoveEvent(string eventName)
-```
+
+> **Warning**: Be careful of using this method if you have registered listeners from the objects of additive scenes incluing `DontDestroyOnLoad` `Scene`, They will also be removed.
 
 > Examples:
 > 
 > ```cs
-> GameEvents.Remove("GameOver");
-> ```
-> ```cs
-> e.RemoveEvent("Pause");
+> GameEvents.Clear();
 > ```
 
 
 <br>
 
-#### Remove All
+#### Clear (eventName)
 
-To remove all registered events use:
+To remove all listeners of an event use:
 
 ```cs
-void GameEvents.RemoveAll()
+void GameEvents.Clear(string eventName)
 ```
+
+> **Warning**: Be careful of using this method if you're listening to the event 'eventName' in additive scenes including `DontDestroyOnLoad` `Scene`, They will also be removed.
 
 > Examples:
 > 
 > ```cs
-> GameEvents.RemoveAll();
+> GameEvents.Clear("GameOver");
 > ```
 
 
 <br>
 
-#### Remove All (by prefix)
+#### Clear (filter)
 
-To remove all registered events those their names starts with a prefix use:
+Removes all listeners of events that filtered by their name:
 
 ```cs
-void GameEvents.RemoveAll(string prefix)
+void GameEvents.Clear(Func<string, bool> filter)
 ```
 
 > Examples:
 > 
 > ```cs
-> // registered events
+> // registered listeners
 > e.On("Map/Pause", OnPause);
 > e.On("Map/GameOver", OnGameOver);
 > e.On("Map/LoadLevel", OnLoadLevel);
 >
-> // remove them all at once
-> GameEvents.RemoveAll("Map");
+> // removes all listeners of events that their name starts with "Map"
+> GameEvents.Clear(name => name.StartsWith("Map"));
+> ```
+
+
+<br>
+
+#### Reset
+
+To reinitialize the `GameEvents` use:
+
+```cs
+void GameEvents.Reset()
+```
+
+> **Note**: After calling this method is like working with new `GameEvents`. (all listeners and event keys will be removed.)
+
+> **Warning**: Calling this method will removes all events and listeners of the `GameEvents`.
+
+> Examples:
+> 
+> ```cs
+> GameEvents.Reset();
 > ```
 
 
@@ -458,54 +518,19 @@ string[] GameEvents.GetNames()
 
 <br>
 
-#### Names (by prefix)
+#### Event Count
 
-To get names of all registered events those their names starts with a prefix use:
+
+To get counts of events use:
 
 ```cs
-string[] GameEvents.GetNames(string prefix)
+int GameEvents.eventCount { get; }
 ```
 
 > Examples:
 > 
 > ```cs
-> var eventNames = GameEvents.GetNames("Map");
-> ```
-
-
-<br>
-
-#### CleanUp
-
-To remove all empty events use:
-
-```cs
-void GameEvents.CleanUp()
-```
-
-> Examples:
-> 
-> ```cs
-> void OnSceneChange() {
->     GameEvents.CleanUp();
-> }
-> ```
-
-
-<br>
-
-#### Events Count
-
-To get how many events registered use:
-
-```cs
-int GameEvents.count { get; }
-```
-
-> Examples:
-> 
-> ```cs
-> var eventsCount = GameEvents.count;
+> var eventCount = GameEvents.eventCount;
 > ```
 
 
@@ -514,11 +539,7 @@ int GameEvents.count { get; }
 
 ## Follow
 
-Follow tool let you bind a `Transfrom` to another one:
-
-```cs
-interface IFollower { }
-```
+Follow tool let you bind a `Transfrom` to another `Transform`:
 
 
 <br>
@@ -526,16 +547,16 @@ interface IFollower { }
 #### Follow
 
 ```cs
-IFollower e.Follow(Transform follower, Transform target)
+void e.Follow(Transform follower, Transform target)
 ```
 ```cs
-IFollower e.Follow(Transform follower, Transform target, bool keepDistance)
+void e.Follow(Transform follower, Transform target, bool keepDistance)
 ```
 ```cs
-IFollower e.Follow(Transform follower, Transform target, Vector3 offset)
+void e.Follow(Transform follower, Transform target, Vector3 offset)
 ```
 ```cs
-IFollower e.Follow(Transform follower, Transform target, Action<Transform, Transform> method)
+void e.Follow(Transform follower, Transform target, Action<Transform, Transform> method)
 ```
 
 > Examples:
@@ -547,26 +568,18 @@ IFollower e.Follow(Transform follower, Transform target, Action<Transform, Trans
 
 <br>
 
-#### Stop Follow
+#### Stop Follower
 
 To remove the following `behaviour` use:
 
 ```cs
-void e.StopFollow(Transform follower)
-```
-```cs
-void e.StopFollow(IFollower follower)
+void e.StopFollower(Transform follower)
 ```
 
 > Examples:
 > 
 > ```cs
 > e.StopFollow(transform);
-> ```
-> ```cs
-> var f = e.Follow(transform, player);
-> 
-> e.StopFollow(f);
 > ```
 
 
@@ -685,12 +698,20 @@ double e.RandomDouble()
 #### Item
 
 ```cs
-// random item of an array
+// random item of an array, or default(T) if it's null or empty
 T e.RandomItem<T>(T[] array)
 ```
 ```cs
-// random item of a list
+// random item of an array, or defaultValue if it's null or empty
+T e.RandomItem<T>(T[] array, T defaultValue)
+```
+```cs
+// random item of a list, or default(T) if it's null or empty
 T e.RandomItem<T>(List<T> list)
+```
+```cs
+// random item of a list, or defaultValue if it's null or empty
+T e.RandomItem<T>(List<T> list, T defaultValue)
 ```
 
 > Examples:
@@ -703,7 +724,7 @@ T e.RandomItem<T>(List<T> list)
 > ```cs
 > List<float> list = ...
 >
-> var i = e.RandomItem(list);
+> var i = e.RandomItem(list, -1);
 > ```
 
 
@@ -736,7 +757,6 @@ int e.RandomIndex<T>(List<T> list)
 
 <br>
 
-
 #### Vector2
 
 ```cs
@@ -760,13 +780,9 @@ Vector2 e.RandomNormal2()
 > ```cs
 > var v = e.RandomVector2(5f);
 > ```
-> ```cs
-> var v = e.RandomNormal2();
-> ```
 
 
 <br>
-
 
 #### Vector3
 
@@ -778,10 +794,6 @@ Vector3 e.RandomVector3()
 // point inside the shpere with specified radius
 Vector3 e.RandomVector3(float radius)
 ```
-```cs
-// point on the surface of the unit shpere
-Vector3 e.RandomNormal3()
-```
 
 > Examples:
 > 
@@ -791,10 +803,31 @@ Vector3 e.RandomNormal3()
 > ```cs
 > var v = e.RandomVector3(5f);
 > ```
-> ```cs
-> var v = e.RandomNormal3();
-> ```
 
+
+<br>
+
+#### Color
+
+
+```cs
+Color e.RandomColor()
+```
+```cs
+Color e.RandomColor(Vector2 hue)
+```
+```cs
+Color e.RandomColor(Vector2 hue, Vector2 saturation)
+```
+```cs
+Color e.RandomColor(Vector2 hue, Vector2 saturation, Vector2 value)
+```
+
+> Examples:
+> 
+> ```cs
+> var color = e.RandomColor();
+> ```
 
 
 
@@ -885,19 +918,19 @@ To get absolute value of a value use:
 int e.Abs(int value)
 ```
 ```cs
+long e.Abs(long value)
+```
+```cs
 float e.Abs(float value)
 ```
 ```cs
 double e.Abs(double value)
 ```
-```cs
-long e.Abs(long value)
-```
 
 > Examples:
 > 
 > ```cs
-> var abs = e.Abs(-123);
+> var absolute = e.Abs(-123);
 > ```
 
 
@@ -914,7 +947,13 @@ int e.Clamp(int value, int min, int max)
 float e.Clamp(float value, float min, float max)
 ```
 ```cs
+double e.Clamp(double value, double min, double max)
+```
+```cs
 float e.Clamp01(float value)
+```
+```cs
+double e.Clamp01(double value)
 ```
 
 > Examples:
@@ -939,6 +978,9 @@ Interpolation between two value (`t` gets clamped from 0 to 1):
 
 ```cs
 float e.Lerp(float a, float b, float t)
+```
+```cs
+double e.Lerp(double a, double b, double t)
 ```
 ```cs
 Vector2 e.Lerp(Vector2 a, Vector2 b, float t)
@@ -968,6 +1010,9 @@ Interpolation between two value (`t` does not get clamped):
 
 ```cs
 float e.LerpUnclamped(float a, float b, float t)
+```
+```cs
+double e.LerpUnclamped(double a, double b, double t)
 ```
 ```cs
 Vector2 e.LerpUnclamped(Vector2 a, Vector2 b, float t)
@@ -1009,24 +1054,6 @@ double e.Sin(double radian)
 
 <br>
 
-#### Asin
-
-```cs
-float e.Asin(float value)
-```
-```cs
-double e.Asin(double value)
-```
-
-> Examples:
-> 
-> ```cs
-> var a = e.Asin(sine);
-> ```
-
-
-<br>
-
 #### Cos
 
 ```cs
@@ -1040,24 +1067,6 @@ double e.Cos(double radian)
 > 
 > ```cs
 > var c = e.Cos(90 * e.D2R);
-> ```
-
-
-<br>
-
-#### Acos
-
-```cs
-float e.Acos(float value)
-```
-```cs
-double e.Acos(double value)
-```
-
-> Examples:
-> 
-> ```cs
-> var a = e.Acos(cosine);
 > ```
 
 
@@ -1081,6 +1090,43 @@ double e.Tan(double radian)
 
 <br>
 
+#### Asin
+
+```cs
+float e.Asin(float value)
+```
+```cs
+double e.Asin(double value)
+```
+
+> Examples:
+> 
+> ```cs
+> var a = e.Asin(sine);
+> ```
+
+
+<br>
+
+#### Acos
+
+```cs
+float e.Acos(float value)
+```
+```cs
+double e.Acos(double value)
+```
+
+> Examples:
+> 
+> ```cs
+> var a = e.Acos(cosine);
+> ```
+
+
+
+<br>
+
 #### Atan
 
 ```cs
@@ -1094,24 +1140,6 @@ double e.Atan(double value)
 > 
 > ```cs
 > var a = e.Atan(tangent);
-> ```
-
-
-<br>
-
-#### Pow
-
-```cs
-float e.Pow(float value, float power)
-```
-```cs
-double e.Pow(double value, double power)
-```
-
-> Examples:
-> 
-> ```cs
-> var v = e.Pow(2, 8);
 > ```
 
 
@@ -1231,6 +1259,51 @@ int e.Round(double value)
 
 <br>
 
+#### Sign
+
+```cs
+int e.Sign(int value)
+```
+```cs
+int e.Sign(float value)
+```
+```cs
+int e.Sign(double value)
+```
+
+> Examples:
+> 
+> ```cs
+> var r = e.Sign(-10); // r == -1
+> ```
+> ```cs
+> var r = e.Sign(0); // r == 0
+> ```
+> ```cs
+> var r = e.Sign(10); // r == 1
+> ```
+
+
+<br>
+
+#### Pow
+
+```cs
+float e.Pow(float value, float power)
+```
+```cs
+double e.Pow(double value, double power)
+```
+
+> Examples:
+> 
+> ```cs
+> var v = e.Pow(2, 8);
+> ```
+
+
+<br>
+
 #### Sqrt (Square Root)
 
 ```cs
@@ -1247,46 +1320,12 @@ double e.Sqrt(double value)
 > ```
 
 
-<br>
-
-#### Sign
-
-```cs
-int e.Sign(int value)
-```
-```cs
-int e.Sign(float value)
-```
-```cs
-int e.Sign(double value)
-```
-
-> Examples:
-> 
-> ```cs
-> // r == -1
-> var r = e.Sign(-10);
-> ```
-> ```cs
-> // r == 0
-> var r = e.Sign(0);
-> ```
-> ```cs
-> // r == 1
-> var r = e.Sign(10);
-> ```
-
-
 
 <br>
 
 ## Timers
 
 With timer api you call a method after a delay.
-
-```cs
-interface ITimer { }
-```
 
 
 <br>
@@ -1296,24 +1335,19 @@ interface ITimer { }
 To call method after a delay use:
 
 ```cs
-ITimer e.SetTimeout(GameObject host, Action callback, float delay)
+int e.SetTimeout(Action callback, float delay)
 ```
-
-To call method repeatedly after a sequential delays:
-
 ```cs
-ITimer e.SetTimeout(GameObject host, Action callback, params float[] delays)
+int e.SetTimeout<T>(Action<T> callback, float delay, T arg)
+```
+```cs
+int e.SetTimeout<T1, T2>(Action<T1, T2> callback, float delay, T1 arg1, T2 arg2)
 ```
 
 > Examples:
 > 
 > ```cs
-> e.SetTimeout(gameObject, TimerCallback, 2);
->
-> void TimerCallback() {...}
-> ```
-> ```cs
-> e.SetTimeout(gameObject, TimerCallback, 1, 2, 3, 4, 5);
+> e.SetTimeout(TimerCallback, 2);
 >
 > void TimerCallback() {...}
 > ```
@@ -1326,25 +1360,19 @@ ITimer e.SetTimeout(GameObject host, Action callback, params float[] delays)
 To call method repeatedly with a delay between each call:
 
 ```cs
-ITimer e.SetInterval(GameObject host, Action callback, float delay)
+int e.SetInterval(Action callback, float delay)
 ```
-
-To call method repeatedly with a delay between each call for finite times:
-
 ```cs
-ITimer e.SetInterval(GameObject host, Action callback, float delay, int repeatCount)
+int e.SetInterval<T>(Action<T> callback, float delay, T arg)
+```
+```cs
+int e.SetInterval<T1, T2>(Action<T1, T2> callback, float delay, T1 arg1, T2 arg2)
 ```
 
 > Examples:
 > 
 > ```cs
-> e.SetInterval(gameObject, IntervalCallback, 1);
->
-> void IntervalCallback() {...}
-> ```
-> 
-> ```cs
-> e.SetInterval(gameObject, IntervalCallback, 1, 10);
+> e.SetInterval(IntervalCallback, 1);
 >
 > void IntervalCallback() {...}
 > ```
@@ -1357,13 +1385,13 @@ ITimer e.SetInterval(GameObject host, Action callback, float delay, int repeatCo
 To stop the timer use:
 
 ```cs
-void e.StopTimer(ITimer timer)
+void e.StopTimer(int id)
 ```
 
 > Examples:
 > 
 > ```cs
-> var timer = e.SetInterval(gameObject, IntervalCallback, 1f);
+> var timer = e.SetInterval(IntervalCallback, 1f);
 >
 > e.StopTimer(timer);
 > ```

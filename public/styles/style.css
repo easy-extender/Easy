@@ -1,0 +1,74 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.header {
+  border-bottom: 1px solid gainsboro;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+}
+
+.header .logo {
+  padding: 0;
+  margin: 0;
+}
+
+.header ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  user-select: none;
+  margin-left: 40px;
+}
+
+.header ul li {
+  padding: 10px 10px;
+  margin: 0 10px;
+  border-radius: 6px;
+}
+
+.header ul li:hover {
+  background-color: #eee;
+}
+
+.footer {
+  border-top: 1px solid gainsboro;
+  text-align: center;
+  color: #ccc;
+  padding: 20px 0;
+}
+
+.app>.content {
+  padding: 20px 0;
+}
+
+.page.home .product img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.page.home .product h3 {
+  margin: 20px 0;
+  font-size: x-large;
+}
+
+.page.home .product p {
+  margin: 10px 0;
+}
+
+.page.docs iframe {
+  width: 100%;
+  min-height: 820px;
+  padding-right: -20px;
+  border: none;
+  outline: none;
+}

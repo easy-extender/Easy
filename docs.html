@@ -1367,7 +1367,6 @@ body,
 <li><a href="#float">float</a></li>
 <li><a href="#double">double</a></li>
 <li><a href="#item">Item</a></li>
-<li><a href="#index">index</a></li>
 <li><a href="#vector2">Vector2</a></li>
 <li><a href="#vector3">Vector3</a></li>
 <li><a href="#color">Color</a></li>
@@ -1375,7 +1374,6 @@ body,
 </li>
 <li><a href="#math">Math</a>
 <ul>
-<li><a href="#constants">Constants</a></li>
 <li><a href="#to-radian">To Radian</a></li>
 <li><a href="#to-degree">To Degree</a></li>
 <li><a href="#absolute">Absolute</a></li>
@@ -1681,9 +1679,6 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 <p><strong>Note</strong>: After calling this method is like working with new <code>GameEvents</code>. (all listeners and event keys will be removed.)</p>
 </blockquote>
 <blockquote>
-<p><strong>Warning</strong>: Calling this method will removes all events and listeners of the <code>GameEvents</code>.</p>
-</blockquote>
-<blockquote>
 <p>Examples:</p>
 <pre><code class="language-cs"><div>GameEvents.Reset();
 </div></code></pre>
@@ -1812,14 +1807,14 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 <pre><code class="language-cs"><div><span class="hljs-comment">// random item of an array, or default(T) if it&#x27;s null or empty</span>
 T e.RandomItem&lt;T&gt;(T[] array)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// random item of an array, or defaultValue if it&#x27;s null or empty</span>
-T e.RandomItem&lt;T&gt;(T[] array, T defaultValue)
+<pre><code class="language-cs"><div><span class="hljs-comment">// random item of an array, or default(T) if it&#x27;s null or empty</span>
+T e.RandomItem&lt;T&gt;(T[] array, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-comment">// random item of a list, or default(T) if it&#x27;s null or empty</span>
 T e.RandomItem&lt;T&gt;(List&lt;T&gt; list)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// random item of a list, or defaultValue if it&#x27;s null or empty</span>
-T e.RandomItem&lt;T&gt;(List&lt;T&gt; list, T defaultValue)
+<pre><code class="language-cs"><div><span class="hljs-comment">// random item of a list, or default(T) if it&#x27;s null or empty</span>
+T e.RandomItem&lt;T&gt;(List&lt;T&gt; list, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index)
 </div></code></pre>
 <blockquote>
 <p>Examples:</p>
@@ -1829,26 +1824,7 @@ T e.RandomItem&lt;T&gt;(List&lt;T&gt; list, T defaultValue)
 </div></code></pre>
 <pre><code class="language-cs"><div>List&lt;<span class="hljs-built_in">float</span>&gt; list = ...
 
-<span class="hljs-keyword">var</span> i = e.RandomItem(list, <span class="hljs-number">-1</span>);
-</div></code></pre>
-</blockquote>
-<br>
-<h4 id="index">index</h4>
-<pre><code class="language-cs"><div><span class="hljs-comment">// 0 to (array.Length - 1) (inclusive)</span>
-<span class="hljs-built_in">int</span> e.RandomIndex&lt;T&gt;(T[] array)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// 0 to (list.Count - 1) (inclusive)</span>
-<span class="hljs-built_in">int</span> e.RandomIndex&lt;T&gt;(List&lt;T&gt; list)
-</div></code></pre>
-<blockquote>
-<p>Examples:</p>
-<pre><code class="language-cs"><div><span class="hljs-built_in">int</span>[] array = ...
-
-<span class="hljs-keyword">var</span> i = e.RandomIndex(array);
-</div></code></pre>
-<pre><code class="language-cs"><div>List&lt;<span class="hljs-built_in">float</span>&gt; list = ...
-
-<span class="hljs-keyword">var</span> i = e.RandomIndex(list);
+<span class="hljs-keyword">var</span> f = e.RandomItem(list, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index);
 </div></code></pre>
 </blockquote>
 <br>
@@ -1858,9 +1834,6 @@ Vector2 e.RandomVector2()
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-comment">// point inside the circle with specified radius</span>
 Vector2 e.RandomVector2(<span class="hljs-built_in">float</span> radius)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// point on the circumference of the unit circle</span>
-Vector2 e.RandomNormal2()
 </div></code></pre>
 <blockquote>
 <p>Examples:</p>
@@ -1902,26 +1875,6 @@ Vector3 e.RandomVector3(<span class="hljs-built_in">float</span> radius)
 <br>
 <h2 id="math">Math</h2>
 <p>A list of easy access mathematical tools:</p>
-<br>
-<h4 id="constants">Constants</h4>
-<pre><code class="language-cs"><div><span class="hljs-comment">// the π value</span>
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">float</span> e.PI
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// degree to radian conversion constant</span>
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">float</span> e.D2R
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// radian to degree conversion constant</span>
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">float</span> e.R2D
-</div></code></pre>
-<blockquote>
-<p>Examples:</p>
-<pre><code class="language-cs"><div><span class="hljs-keyword">var</span> circumference = <span class="hljs-number">2</span> * e.PI * radius;
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">var</span> radian = e.D2R * <span class="hljs-number">180</span>;
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">var</span> degree = e.R2D * radian;
-</div></code></pre>
-</blockquote>
 <br>
 <h4 id="to-radian">To Radian</h4>
 <p>Another way to convert degree to radian is:</p>

@@ -1366,7 +1366,7 @@ body,
 <li><a href="#int">int</a></li>
 <li><a href="#float">float</a></li>
 <li><a href="#double">double</a></li>
-<li><a href="#item">Item</a></li>
+<li><a href="#element">Element</a></li>
 <li><a href="#vector2">Vector2</a></li>
 <li><a href="#vector3">Vector3</a></li>
 <li><a href="#color">Color</a></li>
@@ -1514,25 +1514,18 @@ body,
 <p>To add an <code>event listener</code> use:</p>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action listener)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">bool</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">int</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">float</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">string</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action&lt;Color&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On(<span class="hljs-built_in">string</span> eventName, Action&lt;Vector3&gt; listener)
-</div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.On&lt;T&gt;(<span class="hljs-built_in">string</span> eventName, Action&lt;T&gt; listener)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.On(<span class="hljs-built_in">string</span> eventName, Action listener)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.On(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">object</span>&gt; listener)
 </div></code></pre>
 <blockquote>
+<p><strong>Note</strong>: All listeners of same event must have same signature, otherwise it will <code>throw</code> an exception.</p>
+</blockquote>
+<blockquote>
 <p>Examples:</p>
-<pre><code class="language-cs"><div>e.On(<span class="hljs-string">&quot;Pause&quot;</span>, OnPause);
+<pre><code class="language-cs"><div>e.On&lt;<span class="hljs-built_in">bool</span>&gt;(<span class="hljs-string">&quot;Pause&quot;</span>, OnPause);
 
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">OnPause</span>(<span class="hljs-params"><span class="hljs-built_in">bool</span> paused</span>)</span> {...}
 </div></code></pre>
@@ -1542,22 +1535,15 @@ body,
 <p>To add an <code>event listener</code> just for next emit use:</p>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action listener)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">bool</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">int</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">float</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">string</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;Color&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;Vector3&gt; listener)
-</div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Once&lt;T&gt;(<span class="hljs-built_in">string</span> eventName, Action&lt;T&gt; listener)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Once(<span class="hljs-built_in">string</span> eventName, Action listener)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Once(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">object</span>&gt; listener)
 </div></code></pre>
+<blockquote>
+<p><strong>Note</strong>: All listeners of same event must have same signature, otherwise it will <code>throw</code> an exception.</p>
+</blockquote>
 <blockquote>
 <p>Examples:</p>
 <pre><code class="language-cs"><div>e.Once(<span class="hljs-string">&quot;GameOver&quot;</span>, OnGameOver);
@@ -1570,19 +1556,9 @@ body,
 <p>To remove an <code>event listener</code> use:</p>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action listener)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">bool</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">int</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">float</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">string</span>&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;Color&gt; listener)
-</div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;Vector3&gt; listener)
-</div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Off&lt;T&gt;(<span class="hljs-built_in">string</span> eventName, Action&lt;T&gt; listener)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Off(<span class="hljs-built_in">string</span> eventName, Action listener)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Off(<span class="hljs-built_in">string</span> eventName, Action&lt;<span class="hljs-built_in">object</span>&gt; listener)
 </div></code></pre>
@@ -1618,6 +1594,8 @@ body,
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Emit(<span class="hljs-built_in">string</span> eventName)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Emit&lt;T&gt;(<span class="hljs-built_in">string</span> eventName, T data)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Emit(<span class="hljs-built_in">string</span> eventName)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Emit(<span class="hljs-built_in">string</span> eventName, <span class="hljs-built_in">object</span> data)
 </div></code></pre>
@@ -1679,6 +1657,9 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 <p><strong>Note</strong>: After calling this method is like working with new <code>GameEvents</code>. (all listeners and event keys will be removed.)</p>
 </blockquote>
 <blockquote>
+<p><strong>Note</strong>: Difference between <code>Reset()</code> and <code>Clear()</code> method is that <code>Clear</code> method will not remove <code>Dictionary</code> items and just remove listeners of all events but <code>Reset</code> will empty the event <code>Dictionary</code>.</p>
+</blockquote>
+<blockquote>
 <p>Examples:</p>
 <pre><code class="language-cs"><div>GameEvents.Reset();
 </div></code></pre>
@@ -1695,7 +1676,7 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 </blockquote>
 <br>
 <h4 id="event-count">Event Count</h4>
-<p>To get counts of events use:</p>
+<p>To get current count of events of the <code>GameEvents</code> use:</p>
 <pre><code class="language-cs"><div><span class="hljs-built_in">int</span> GameEvents.eventCount { <span class="hljs-keyword">get</span>; }
 </div></code></pre>
 <blockquote>
@@ -1715,6 +1696,8 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Vector3 offset)
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Action&lt;Transform, Transform&gt; method)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Func&lt;Vector3, Vector3, Vector3&gt; method)
 </div></code></pre>
 <blockquote>
 <p>Examples:</p>
@@ -1803,28 +1786,28 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 </div></code></pre>
 </blockquote>
 <br>
-<h4 id="item">Item</h4>
-<pre><code class="language-cs"><div><span class="hljs-comment">// random item of an array, or default(T) if it&#x27;s null or empty</span>
-T e.RandomItem&lt;T&gt;(T[] array)
+<h4 id="element">Element</h4>
+<pre><code class="language-cs"><div><span class="hljs-comment">// random element of an array, or default(T) if it&#x27;s null or empty</span>
+T e.RandomElement&lt;T&gt;(T[] array)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// random item of an array, or default(T) if it&#x27;s null or empty</span>
-T e.RandomItem&lt;T&gt;(T[] array, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index)
+<pre><code class="language-cs"><div><span class="hljs-comment">// random element of an array, or default(T) if it&#x27;s null or empty</span>
+T e.RandomElement&lt;T&gt;(T[] array, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// random item of a list, or default(T) if it&#x27;s null or empty</span>
-T e.RandomItem&lt;T&gt;(List&lt;T&gt; list)
+<pre><code class="language-cs"><div><span class="hljs-comment">// random element of a list, or default(T) if it&#x27;s null or empty</span>
+T e.RandomElement&lt;T&gt;(List&lt;T&gt; list)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-comment">// random item of a list, or default(T) if it&#x27;s null or empty</span>
-T e.RandomItem&lt;T&gt;(List&lt;T&gt; list, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index)
+<pre><code class="language-cs"><div><span class="hljs-comment">// random element of a list, or default(T) if it&#x27;s null or empty</span>
+T e.RandomElement&lt;T&gt;(List&lt;T&gt; list, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index)
 </div></code></pre>
 <blockquote>
 <p>Examples:</p>
 <pre><code class="language-cs"><div><span class="hljs-built_in">int</span>[] array = ...
 
-<span class="hljs-keyword">var</span> i = e.RandomItem(array);
+<span class="hljs-keyword">var</span> i = e.RandomElement(array);
 </div></code></pre>
 <pre><code class="language-cs"><div>List&lt;<span class="hljs-built_in">float</span>&gt; list = ...
 
-<span class="hljs-keyword">var</span> f = e.RandomItem(list, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index);
+<span class="hljs-keyword">var</span> f = e.RandomElement(list, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> index);
 </div></code></pre>
 </blockquote>
 <br>
@@ -2157,7 +2140,7 @@ Vector3 e.RandomVector3(<span class="hljs-built_in">float</span> radius)
 </blockquote>
 <br>
 <h2 id="timers">Timers</h2>
-<p>With timer api you call a method after a delay.</p>
+<p>With timer api you can call a method after a delay.</p>
 <br>
 <h4 id="timeout">Timeout</h4>
 <p>To call method after a delay use:</p>

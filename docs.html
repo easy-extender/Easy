@@ -1352,6 +1352,7 @@ body,
 <li><a href="#reset">Reset</a></li>
 <li><a href="#names">Names</a></li>
 <li><a href="#event-count">Event Count</a></li>
+<li><a href="#listeners-count">Listeners Count</a></li>
 </ul>
 </li>
 <li><a href="#follow">Follow</a>
@@ -1374,8 +1375,8 @@ body,
 </li>
 <li><a href="#math">Math</a>
 <ul>
-<li><a href="#to-radian">To Radian</a></li>
-<li><a href="#to-degree">To Degree</a></li>
+<li><a href="#radian">Radian</a></li>
+<li><a href="#degree">Degree</a></li>
 <li><a href="#absolute">Absolute</a></li>
 <li><a href="#clamp">Clamp</a></li>
 <li><a href="#lerp">Lerp</a></li>
@@ -1685,6 +1686,16 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 </div></code></pre>
 </blockquote>
 <br>
+<h4 id="listeners-count">Listeners Count</h4>
+<p>To get listeners count of an event use:</p>
+<pre><code class="language-cs"><div><span class="hljs-built_in">int</span> GameEvents.ListenerCount(<span class="hljs-built_in">string</span> eventName)
+</div></code></pre>
+<blockquote>
+<p>Examples:</p>
+<pre><code class="language-cs"><div><span class="hljs-keyword">var</span> listenerCount = GameEvents.ListenerCount(<span class="hljs-string">&quot;Pause&quot;</span>);
+</div></code></pre>
+</blockquote>
+<br>
 <h2 id="follow">Follow</h2>
 <p>Follow tool let you bind a <code>Transfrom</code> to another <code>Transform</code>:</p>
 <br>
@@ -1695,9 +1706,9 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 </div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Vector3 offset)
 </div></code></pre>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Action&lt;Transform, Transform&gt; method)
-</div></code></pre>
 <pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Func&lt;Vector3, Vector3, Vector3&gt; method)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> e.Follow(Transform follower, Transform target, Action&lt;Transform, Transform&gt; method)
 </div></code></pre>
 <blockquote>
 <p>Examples:</p>
@@ -1780,6 +1791,12 @@ GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&
 <pre><code class="language-cs"><div><span class="hljs-comment">// 0 (inclusive) to 1 (exclusive)</span>
 <span class="hljs-built_in">double</span> e.RandomDouble()
 </div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-comment">// 0 (inclusive) to max (exclusive)</span>
+<span class="hljs-built_in">double</span> e.RandomDouble(<span class="hljs-built_in">double</span> max)
+</div></code></pre>
+<pre><code class="language-cs"><div><span class="hljs-comment">// min (inclusive) to max (exclusive)</span>
+<span class="hljs-built_in">double</span> e.RandomDouble(<span class="hljs-built_in">double</span> min, <span class="hljs-built_in">double</span> max)
+</div></code></pre>
 <blockquote>
 <p>Examples:</p>
 <pre><code class="language-cs"><div><span class="hljs-keyword">var</span> d = e.RandomDouble();
@@ -1859,7 +1876,7 @@ Vector3 e.RandomVector3(<span class="hljs-built_in">float</span> radius)
 <h2 id="math">Math</h2>
 <p>A list of easy access mathematical tools:</p>
 <br>
-<h4 id="to-radian">To Radian</h4>
+<h4 id="radian">Radian</h4>
 <p>Another way to convert degree to radian is:</p>
 <pre><code class="language-cs"><div><span class="hljs-built_in">float</span> e.Radian(<span class="hljs-built_in">float</span> degree)
 </div></code></pre>
@@ -1871,7 +1888,7 @@ Vector3 e.RandomVector3(<span class="hljs-built_in">float</span> radius)
 </div></code></pre>
 </blockquote>
 <br>
-<h4 id="to-degree">To Degree</h4>
+<h4 id="degree">Degree</h4>
 <p>Another way to convert radian to degree is:</p>
 <pre><code class="language-cs"><div><span class="hljs-built_in">float</span> e.Degree(<span class="hljs-built_in">float</span> radian)
 </div></code></pre>

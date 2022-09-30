@@ -1348,7 +1348,7 @@ body,
 <li><a href="#emit">Emit</a></li>
 <li><a href="#clear">Clear</a></li>
 <li><a href="#clear-eventname">Clear (eventName)</a></li>
-<li><a href="#clear-filter">Clear (filter)</a></li>
+<li><a href="#clear-eventnames">Clear (eventNames)</a></li>
 <li><a href="#reset">Reset</a></li>
 <li><a href="#names">Names</a></li>
 <li><a href="#event-count">Event Count</a></li>
@@ -1634,19 +1634,20 @@ body,
 </div></code></pre>
 </blockquote>
 <br>
-<h4 id="clear-filter">Clear (filter)</h4>
-<p>Removes all listeners of events that filtered by their name:</p>
-<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Clear(Func&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">bool</span>&gt; filter)
+<h4 id="clear-eventnames">Clear (eventNames)</h4>
+<p>Removes all listeners of listed events:</p>
+<pre><code class="language-cs"><div><span class="hljs-keyword">void</span> GameEvents.Clear(<span class="hljs-built_in">string</span>[] eventNames)
 </div></code></pre>
 <blockquote>
 <p>Examples:</p>
-<pre><code class="language-cs"><div><span class="hljs-comment">// registered listeners</span>
-e.On(<span class="hljs-string">&quot;Map/Pause&quot;</span>, OnPause);
+<pre><code class="language-cs"><div>e.On(<span class="hljs-string">&quot;Map/Pause&quot;</span>, OnPause);
 e.On(<span class="hljs-string">&quot;Map/GameOver&quot;</span>, OnGameOver);
 e.On(<span class="hljs-string">&quot;Map/LoadLevel&quot;</span>, OnLoadLevel);
 
-<span class="hljs-comment">// removes all listeners of events that their name starts with &quot;Map&quot;</span>
-GameEvents.Clear(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&quot;</span>));
+<span class="hljs-comment">// event names that start with &#x27;Map&#x27; prefix</span>
+<span class="hljs-keyword">var</span> mapEvents = e.GetNames().Where(name =&gt; name.StartsWith(<span class="hljs-string">&quot;Map&quot;</span>));
+
+GameEvents.Clear(mapEvents);
 </div></code></pre>
 </blockquote>
 <br>
